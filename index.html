@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Online rezervace do barbershopu — vyberte si službu, termín a zarezervujte si návštěvu.">
+    <title>NOIR Barbershop — Online Rezervace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="header__logo">
+            <span class="header__icon" aria-hidden="true">✂</span>
+            <h1 class="header__title">NOIR</h1>
+            <span class="header__subtitle">BARBERSHOP</span>
+        </div>
+    </header>
+
+    <!-- Progress Steps -->
+    <nav class="progress" role="navigation" aria-label="Průběh rezervace">
+        <ol class="progress__steps">
+            <li class="progress__step progress__step--active" data-step="1" aria-current="step">
+                <span class="progress__number" aria-hidden="true">1</span>
+                <span class="progress__label">Výběr</span>
+            </li>
+            <li class="progress__step" data-step="2">
+                <span class="progress__number" aria-hidden="true">2</span>
+                <span class="progress__label">Termín</span>
+            </li>
+            <li class="progress__step" data-step="3">
+                <span class="progress__number" aria-hidden="true">3</span>
+                <span class="progress__label">Údaje</span>
+            </li>
+        </ol>
+    </nav>
+
+    <main class="main" role="main">
+        <!-- STEP 1: Service & Barber Selection -->
+        <section id="step-1" class="step step--active" role="region" aria-label="Výběr služby a kadeřníka">
+            <h2 class="step__title">Vyberte si službu</h2>
+            <div id="services-grid" class="cards-grid" role="listbox" aria-label="Dostupné služby">
+                <!-- Populated by JS -->
+            </div>
+
+            <h2 class="step__title step__title--mt">Vyberte si kadeřníka</h2>
+            <div id="barbers-grid" class="cards-grid cards-grid--barbers" role="listbox" aria-label="Dostupní kadeřníci">
+                <!-- Populated by JS -->
+            </div>
+
+            <div class="step__actions">
+                <button id="btn-to-step-2" class="btn btn--primary" disabled aria-label="Pokračovat k výběru termínu">
+                    Pokračovat
+                    <span class="btn__arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 2: Date & Time Selection -->
+        <section id="step-2" class="step" role="region" aria-label="Výběr termínu" hidden>
+            <h2 class="step__title">Vyberte datum</h2>
+
+            <div class="calendar" role="application" aria-label="Kalendář">
+                <div class="calendar__header">
+                    <button id="cal-prev" class="calendar__nav" aria-label="Předchozí měsíc">‹</button>
+                    <span id="cal-month-label" class="calendar__month"></span>
+                    <button id="cal-next" class="calendar__nav" aria-label="Následující měsíc">›</button>
+                </div>
+                <div class="calendar__weekdays" aria-hidden="true">
+                    <span>Po</span><span>Út</span><span>St</span><span>Čt</span><span>Pá</span><span>So</span><span>Ne</span>
+                </div>
+                <div id="cal-days" class="calendar__days" role="grid" aria-label="Dny v měsíci">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <h2 class="step__title step__title--mt" id="time-slots-heading">Dostupné časy</h2>
+            <div id="time-slots" class="time-slots" role="listbox" aria-labelledby="time-slots-heading">
+                <p class="time-slots__placeholder">Nejprve vyberte datum z kalendáře.</p>
+            </div>
+
+            <div class="step__actions step__actions--split">
+                <button id="btn-back-1" class="btn btn--secondary" aria-label="Zpět na výběr služby">
+                    <span class="btn__arrow" aria-hidden="true">←</span>
+                    Zpět
+                </button>
+                <button id="btn-to-step-3" class="btn btn--primary" disabled aria-label="Pokračovat k vyplnění údajů">
+                    Pokračovat
+                    <span class="btn__arrow" aria-hidden="true">→</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- STEP 3: Contact Details -->
+        <section id="step-3" class="step" role="region" aria-label="Vyplnění kontaktních údajů" hidden>
+            <h2 class="step__title">Vaše údaje</h2>
+
+            <!-- Summary of selections -->
+            <div id="booking-summary" class="summary" aria-label="Shrnutí rezervace">
+                <!-- Populated by JS -->
+            </div>
+
+            <form id="contact-form" class="form" novalidate>
+                <div class="form__group">
+                    <label for="input-name" class="form__label">Jméno a příjmení</label>
+                    <input
+                        type="text"
+                        id="input-name"
+                        class="form__input"
+                        required
+                        autocomplete="name"
+                        placeholder="Jan Novák"
+                        aria-required="true"
+                    >
+                    <span class="form__error" id="error-name" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="form__group">
+                    <label for="input-email" class="form__label">E-mail</label>
+                    <input
+                        type="email"
+                        id="input-email"
+                        class="form__input"
+                        required
+                        autocomplete="email"
+                        placeholder="jan@email.cz"
+                        aria-required="true"
+                    >
+                    <span class="form__error" id="error-email" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="form__group">
+                    <label for="input-phone" class="form__label">Telefon</label>
+                    <input
+                        type="tel"
+                        id="input-phone"
+                        class="form__input"
+                        required
+                        autocomplete="tel"
+                        placeholder="+420 777 123 456"
+                        aria-required="true"
+                    >
+                    <span class="form__error" id="error-phone" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="step__actions step__actions--split">
+                    <button type="button" id="btn-back-2" class="btn btn--secondary" aria-label="Zpět na výběr termínu">
+                        <span class="btn__arrow" aria-hidden="true">←</span>
+                        Zpět
+                    </button>
+                    <button type="submit" class="btn btn--primary btn--confirm" aria-label="Potvrdit rezervaci">
+                        Rezervovat
+                        <span class="btn__arrow" aria-hidden="true">✓</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- SUCCESS screen -->
+        <section id="step-success" class="step" role="region" aria-label="Potvrzení rezervace" hidden>
+            <div class="success">
+                <div class="success__icon" aria-hidden="true">✓</div>
+                <h2 class="success__title">Rezervace potvrzena!</h2>
+                <p class="success__text">Děkujeme za vaši rezervaci. Potvrzení jsme odeslali na váš e-mail.</p>
+                <div id="success-details" class="summary summary--success"></div>
+                <button id="btn-restart" class="btn btn--primary" aria-label="Vytvořit novou rezervaci">
+                    Nová rezervace
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <p>© 2026 NOIR Barbershop — Ukázková rezervační aplikace</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
