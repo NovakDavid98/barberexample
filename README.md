@@ -1,6 +1,6 @@
-# Barber Reservation — Frontend
+# Barber Reservation - Frontend
 
-A simple reservation flow for a barbershop. Built as a practical exercise — no frameworks, just vanilla HTML, CSS and JavaScript.
+A simple reservation flow for a barbershop. Built as a practical exercise, with no frameworks, just vanilla HTML, CSS and JavaScript.
 
 ## What it does
 
@@ -27,14 +27,14 @@ Then open `http://localhost:8080` in your browser.
 - Mobile-first layout, tested down to 320px wide
 - No dependencies, no build step
 - Keyboard navigation works throughout, ARIA attributes are in place for screen readers
-- State is managed in a plain JS object — selections from step 1 are still there when you reach step 3
+- State is managed in a plain JS object. Selections from step 1 are still there when you reach step 3.
 
 ## Structure
 
 ```
-index.html   — markup and page structure
-style.css    — all styles, variables at the top
-app.js       — state, rendering, event handling
+index.html   : markup and page structure
+style.css    : all styles, variables at the top
+app.js       : state, rendering, event handling
 ```
 
 ## API design
